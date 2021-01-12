@@ -3,6 +3,7 @@ import movieReducer, { initialState, searchTitle, addNominee, removeNominee } fr
 import { useDispatch } from 'react-redux'
 import Results from './components/results'
 import Nominees from './components/nominees'
+import Banner from './components/banner'
 import axios from 'axios'
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
   return (
     <div className="App">
       <h1>Hello World!</h1>
+      {state.nominatedList.length === 5 ? (
+        <Banner />
+      ) : (<div></div>)}
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Search Movie  Title" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
         <button type="submit">Search</button>

@@ -48,15 +48,19 @@ export default function movieReducer(state = initialState, action) {
         searched: action.payload.Title
       }
     case ADD_NOMINEE:
-      return {
-        ...state,
-        nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year }],
-        results: [...state.results.map((movie) => {
-          if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
-            movie.isNominated = true
-          }
-          return movie
-        })]
+      if (state.nominatedList.length < 5) {
+        return {
+          ...state,
+          nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year }],
+          results: [...state.results.map((movie) => {
+            if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
+              movie.isNominated = true
+            }
+            return movie
+          })]
+        }
+      } else {
+        return state
       }
     case REMOVE_NOMINEE:
       return {
