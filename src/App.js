@@ -1,5 +1,5 @@
 import { useState, useReducer } from 'react'
-import movieReducer, { initialState, searchTitle } from './reducers/movieReducer'
+import movieReducer, { initialState, searchTitle, addNominee } from './reducers/movieReducer'
 import { useDispatch } from 'react-redux'
 import Results from './components/results'
 import axios from 'axios'
@@ -29,7 +29,17 @@ function App() {
         <button type="submit">Search</button>
       </form>
       <div className="results-container">
-        <Results results={state.results} searched={state.searched} />
+        {
+          state.results.length > 0 &&
+          <Results
+            results={state.results}
+            searched={state.searched}
+            nominate={(data) => {
+              dispatch(addNominee(data))
+            }
+            }
+          />
+        }
       </div>
     </div>
 
