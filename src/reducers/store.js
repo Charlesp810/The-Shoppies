@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
-import rootReducer from './rootReducer'
+import movieReducer from './movieReducer'
 
 export default function configureStore() {
   return createStore(
-    rootReducer,
+    movieReducer,
     composeWithDevTools(applyMiddleware(thunk))
   )
 }
