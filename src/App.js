@@ -1,7 +1,8 @@
 import { useState, useReducer } from 'react'
-import movieReducer, { initialState, searchTitle, addNominee } from './reducers/movieReducer'
+import movieReducer, { initialState, searchTitle, addNominee, removeNominee } from './reducers/movieReducer'
 import { useDispatch } from 'react-redux'
 import Results from './components/results'
+import Nominees from './components/nominees'
 import axios from 'axios'
 
 function App() {
@@ -40,6 +41,15 @@ function App() {
             }
           />
         }
+      </div>
+      <div className="nominees-container">
+        <Nominees
+          list={state.nominatedList}
+          removeMovie={(data) => {
+            dispatch(removeNominee(data))
+          }
+          }
+        />
       </div>
     </div>
 

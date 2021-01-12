@@ -1,6 +1,7 @@
 //Action Type
 const SEARCH_TITLE = 'SEARCH_TITLE'
 const ADD_NOMINEE = 'ADD_NOMINEE'
+const REMOVE_NOMINEE = 'REMOVE_NOMINEE'
 
 //Action Creator
 export const searchTitle = (data, Title) => ({
@@ -10,6 +11,11 @@ export const searchTitle = (data, Title) => ({
 
 export const addNominee = (data) => ({
   type: ADD_NOMINEE,
+  payload: data
+})
+
+export const removeNominee = (data) => ({
+  type: REMOVE_NOMINEE,
   payload: data
 })
 
@@ -28,7 +34,7 @@ export default function movieReducer(state = initialState, action) {
           let isNominated = false;
 
           state.nominatedList.forEach((nominee) => {
-            if (nominee.Title === movie.Title) {
+            if (nominee.Title === movie.Title && nominee.Year === movie.Year) {
               isNominated = true
             }
           })
@@ -42,13 +48,25 @@ export default function movieReducer(state = initialState, action) {
         searched: action.payload.Title
       }
     case ADD_NOMINEE:
-      console.log('this is data: ', action.payload)
       return {
         ...state,
         nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year }],
         results: [...state.results.map((movie) => {
           if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
             movie.isNominated = true
+          }
+          return movie
+        })]
+      }
+    case REMOVE_NOMINEE:
+      return {
+        ...state,
+        nominatedList: state.nominatedList.filter((movie) => {
+          return movie.Title !== action.payload.Title && movie.Year !== action.payload.Year
+        }),
+        results: [...state.results.map((movie) => {
+          if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
+            movie.isNominated = false
           }
           return movie
         })]
