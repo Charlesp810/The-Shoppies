@@ -1,11 +1,11 @@
 
 
-function Results({ results, searched, nominate }) {
+function ListBox({ title, list, dispatch, buttonText }) {
   return (
     <div className="list-wrapper">
-      <h1>Results for {searched}</h1>
+      <h1>{title}</h1>
       <ul>
-        {results.map((movie) => (
+        {list.map((movie) => (
           <li className="row" key={`${movie.Title} ${movie.Year}`}>
             <img src={movie.Poster} alt="Not found" />
             <div className="row-text-button">
@@ -13,9 +13,9 @@ function Results({ results, searched, nominate }) {
               <button
                 type="button"
                 disabled={movie.isNominated ? true : undefined}
-                onClick={() => nominate({ Title: movie.Title, Year: movie.Year, Poster: movie.Poster })}
+                onClick={() => dispatch({ Title: movie.Title, Year: movie.Year, Poster: movie.Poster })}
               >
-                Nominate
+                {buttonText}
               </button>
             </div>
           </li>
@@ -25,4 +25,4 @@ function Results({ results, searched, nominate }) {
   )
 }
 
-export default Results;
+export default ListBox;

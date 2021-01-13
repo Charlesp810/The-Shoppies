@@ -1,8 +1,7 @@
 import { useState, useReducer } from 'react'
 import movieReducer, { initialState, searchTitle, addNominee, removeNominee } from './reducers/movieReducer'
 import { useDispatch } from 'react-redux'
-import Results from './components/results'
-import Nominees from './components/nominees'
+import ListBox from './components/listbox'
 import Banner from './components/banner'
 import './App.css'
 import axios from 'axios'
@@ -41,22 +40,21 @@ function App() {
         <button type="submit">Search</button>
       </form>
       <div className="sub-container">
-        {
-          <Results
-            results={state.results}
-            searched={state.searched}
-            nominate={(data) => {
-              dispatch(addNominee(data))
-            }
-            }
-          />
-        }
-        <Nominees
+        <ListBox
+          title={`Results for ${state.searched}`}
+          list={state.results}
+          dispatch={(data) => {
+            dispatch(addNominee(data))
+          }}
+          buttonText={'nominate'}
+        />
+        <ListBox
+          title={'Nominations'}
           list={state.nominatedList}
-          removeMovie={(data) => {
+          dispatch={(data) => {
             dispatch(removeNominee(data))
-          }
-          }
+          }}
+          buttonText={'remove'}
         />
       </div>
     </div>
