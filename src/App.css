@@ -1,5 +1,5 @@
 html {
-  background: url('../src/images/movie-background.jpg') no-repeat center center fixed;
+  background: url('../src/images/movie-bg-black.jpg') no-repeat center center fixed;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
@@ -16,9 +16,24 @@ html {
 }
 
 .form-container {
-  padding: 20px;
-  background: lightgray;
+  padding: 15px;
+  background: #969695;
   width: 100%;
+  position: relative;
+}
+
+.search-field {
+  width: calc(93% - 140px);
+  height: 28px;
+  padding-left: 40px;
+}
+
+.magnifying-glass {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 4%;
+  padding-top: 8px;
 }
 
 .sub-container {
@@ -29,13 +44,8 @@ html {
 }
 
 .list-wrapper {
-  background: linear-gradient(to left, transparent, #e4edf1 25%, #e4edf1 75%, transparent 100%);
+  background: linear-gradient(to left, transparent, #969191 35%, black 55%, transparent 100%);
   width: 700px;
-}
-
-.search-field {
-  width: 90%;
-  height: 20px;
 }
 
 .row {
@@ -52,4 +62,38 @@ html {
 img {
   width: 50px;
   height: 100px;
+}
+
+h1 {
+  color: goldenrod;
+  font-size: 40px;
+}
+
+h2 {
+  color: goldenrod;
+}
+
+.row-text {
+  color: whitesmoke;
+  padding-bottom: 15px;
+  font-size: 18px;
+}
+
+button {
+  width: 140px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border: 0;
+  border-radius: 140px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+  background: gold;
+} :disabled {
+  background-color: gray;
 }

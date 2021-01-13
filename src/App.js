@@ -3,6 +3,7 @@ import movieReducer, { initialState, searchTitle, addNominee, removeNominee } fr
 import { useDispatch } from 'react-redux'
 import ListBox from './components/listbox'
 import Banner from './components/banner'
+import { ReactComponent as Search } from './search.svg';
 import './App.css'
 import axios from 'axios'
 
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to the Shoppies!</h1>
+      <h1>The Shoppies</h1>
       {
         state.nominatedList.length === 5 &&
         <Banner />
@@ -37,6 +38,7 @@ function App() {
           placeholder="Search Movie Title"
           value={searchInput} onChange={(event) => setSearchInput(event.target.value)}
         />
+        <Search className="magnifying-glass" />
         <button type="submit">Search</button>
       </form>
       <div className="sub-container">
@@ -46,7 +48,7 @@ function App() {
           dispatch={(data) => {
             dispatch(addNominee(data))
           }}
-          buttonText={'nominate'}
+          buttonText={'Nominate'}
         />
         <ListBox
           title={'Nominations'}
@@ -54,7 +56,7 @@ function App() {
           dispatch={(data) => {
             dispatch(removeNominee(data))
           }}
-          buttonText={'remove'}
+          buttonText={'Remove'}
         />
       </div>
     </div>
