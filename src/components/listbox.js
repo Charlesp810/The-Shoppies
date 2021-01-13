@@ -1,4 +1,4 @@
-
+import movieCamera from '../images/movie-camera.jpg'
 
 function ListBox({ title, list, dispatch, buttonText }) {
   return (
@@ -7,7 +7,11 @@ function ListBox({ title, list, dispatch, buttonText }) {
       <ul>
         {list.map((movie) => (
           <li className="row" key={`${movie.Title} ${movie.Year}`}>
-            <img src={movie.Poster} alt="Not found" />
+            {
+              movie.Poster !== 'N/A' ?
+                <img src={movie.Poster} alt='Not Found' /> :
+                <img src={movieCamera} alt='Alt Pic' />
+            }
             <div className="row-text-button">
               <span className="row-text">{`${movie.Title} (${movie.Year})`}</span>
               <button
