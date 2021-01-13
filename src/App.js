@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import Results from './components/results'
 import Nominees from './components/nominees'
 import Banner from './components/banner'
+import './App.css'
 import axios from 'axios'
 
 function App() {
@@ -25,38 +26,50 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello World!</h1>
-      {state.nominatedList.length === 5 ? (
-        <Banner />
-      ) : (<div></div>)}
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Search Movie  Title" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} />
-        <button type="submit">Search</button>
-      </form>
-      <div className="results-container">
+      <div className="main-container">
+        <h1>Welcome to the Shoppies!</h1>
         {
-          state.results.length > 0 &&
-          <Results
-            results={state.results}
-            searched={state.searched}
-            nominate={(data) => {
-              dispatch(addNominee(data))
-            }
-            }
-          />
+          state.nominatedList.length === 5 &&
+          <Banner />
         }
-      </div>
-      <div className="nominees-container">
-        <Nominees
-          list={state.nominatedList}
-          removeMovie={(data) => {
-            dispatch(removeNominee(data))
-          }
-          }
-        />
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <input
+              className="search-field"
+              type="text"
+              placeholder="Search Movie Title"
+              value={searchInput} onChange={(event) => setSearchInput(event.target.value)}
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div className="sub-container">
+          <div className="results-container">
+            {
+              // state.results.length > 0 &&
+              <Results
+                results={state.results}
+                searched={state.searched}
+                nominate={(data) => {
+                  dispatch(addNominee(data))
+                }
+                }
+              />
+            }
+          </div>
+          <div className="nominees-container">
+            <Nominees
+              list={state.nominatedList}
+              removeMovie={(data) => {
+                dispatch(removeNominee(data))
+              }
+              }
+            />
+          </div>
+        </div>
+
       </div>
     </div>
-
   );
 }
 
