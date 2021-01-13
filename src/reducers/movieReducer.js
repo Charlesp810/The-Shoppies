@@ -51,7 +51,7 @@ export default function movieReducer(state = initialState, action) {
       if (state.nominatedList.length < 5) {
         return {
           ...state,
-          nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year }],
+          nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year, Poster: action.payload.Poster }],
           results: [...state.results.map((movie) => {
             if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
               movie.isNominated = true
