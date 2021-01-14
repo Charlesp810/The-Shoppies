@@ -1,10 +1,14 @@
+import goldenBanner from '../images/golden-award.png'
 
 function Banner() {
   return (
-    <h2>
-      You're nominations for the Shoppies are set!
-      Thank you for your sugguestions!
-    </h2>
+    <div className="banner-container">
+      <img className="banner-image" src={goldenBanner} alt="golden banner" />
+      <div className="banner-text">
+        <h2>Nominations Are Set</h2>
+        <h3>Thank You</h3>
+      </div>
+    </div>
   )
 }
 
