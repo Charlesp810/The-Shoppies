@@ -1,5 +1,5 @@
 html {
-  background: url('../src/images/movie-bg-black.jpg') no-repeat center center fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../src/images/movie-bg-black.jpg') no-repeat center center fixed;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
@@ -44,7 +44,6 @@ html {
 }
 
 .list-wrapper {
-  background: linear-gradient(to left, transparent, #969191 35%, black 55%, transparent 100%);
   width: 700px;
 }
 
