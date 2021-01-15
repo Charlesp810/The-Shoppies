@@ -9,6 +9,8 @@ import axios from 'axios'
 
 function App() {
   useEffect(() => {
+
+    console.log('i am curr url', window.location.search)
     dispatch(checkLocalStorage())
   }, [])
   const [searchInput, setSearchInput] = useState('')
@@ -38,7 +40,7 @@ function App() {
         <input
           className="search-field"
           type="text"
-          placeholder="Search Movie Title"
+          placeholder="Search Movie Title..."
           value={searchInput} onChange={(event) => setSearchInput(event.target.value)}
         />
         <Search className="magnifying-glass" />

@@ -40,6 +40,10 @@ export default function movieReducer(state = initialState, action) {
         nominatedList: localStorageState.nominatedList
       } : initialState
     case SEARCH_TITLE:
+      console.log('hereerre', window.location)
+      const url = new URL(window.location.href)
+      url.searchParams.set('search', action.payload.Title)
+      window.history.pushState({}, "", url)
       return {
         ...state,
         results: action.payload.data.Search.map((movie) => {
@@ -62,6 +66,15 @@ export default function movieReducer(state = initialState, action) {
     case ADD_NOMINEE:
       if (state.nominatedList.length < 5) {
         const updatedList = [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year, Poster: action.payload.Poster }]
+
+        const nominatedQueryParam = updatedList.reduce((a, b) => {
+          return a + `${b.Title}+${b.Year},`
+        }, '')
+
+        const url = new URL(window.location.href)
+        url.searchParams.set('nominated', nominatedQueryParam)
+        window.history.pushState({}, "", url)
+
         localStorage.setItem("state", JSON.stringify({ nominatedList: updatedList }))
         return {
           ...state,
@@ -80,6 +93,16 @@ export default function movieReducer(state = initialState, action) {
       const filteredList = state.nominatedList.filter((movie) => {
         return movie.Title !== action.payload.Title && movie.Year !== action.payload.Year
       })
+
+
+      const removeQueryParam = filteredList.reduce((a, b) => {
+        return a + `${b.Title}+${b.Year},`
+      }, '')
+
+      const urlString = new URL(window.location.href)
+      urlString.searchParams.set('nominated', removeQueryParam)
+      window.history.pushState({}, "", urlString)
+
       localStorage.setItem("state", JSON.stringify({ nominatedList: [...filteredList] }))
       return {
         ...state,
