@@ -5,7 +5,7 @@ function ListBox({ title, list, dispatch, buttonText }) {
     <div className="list-wrapper">
       <h2>{title}</h2>
       <ul>
-        {list.map((movie) => (
+        {list?.map((movie) => (
           <li className="row" key={`${movie.Title} ${movie.Year}`}>
             {
               movie.Poster !== 'N/A' ?

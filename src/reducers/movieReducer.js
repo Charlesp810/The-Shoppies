@@ -2,6 +2,7 @@
 const SEARCH_TITLE = 'SEARCH_TITLE'
 const ADD_NOMINEE = 'ADD_NOMINEE'
 const REMOVE_NOMINEE = 'REMOVE_NOMINEE'
+const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE'
 
 //Action Creator
 export const searchTitle = (data, Title) => ({
@@ -19,6 +20,10 @@ export const removeNominee = (data) => ({
   payload: data
 })
 
+export const checkLocalStorage = () => ({
+  type: CHECK_LOCALSTORAGE
+})
+
 export const initialState = {
   results: [],
   searched: '',
@@ -27,6 +32,13 @@ export const initialState = {
 
 export default function movieReducer(state = initialState, action) {
   switch (action.type) {
+    case CHECK_LOCALSTORAGE:
+      const localStorageState = JSON.parse(localStorage.getItem('state'))
+
+      return localStorageState ? {
+        ...state,
+        nominatedList: localStorageState.nominatedList
+      } : initialState
     case SEARCH_TITLE:
       return {
         ...state,
@@ -49,9 +61,11 @@ export default function movieReducer(state = initialState, action) {
       }
     case ADD_NOMINEE:
       if (state.nominatedList.length < 5) {
+        const updatedList = [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year, Poster: action.payload.Poster }]
+        localStorage.setItem("state", JSON.stringify({ nominatedList: updatedList }))
         return {
           ...state,
-          nominatedList: [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year, Poster: action.payload.Poster }],
+          nominatedList: updatedList,
           results: [...state.results.map((movie) => {
             if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
               movie.isNominated = true
@@ -63,17 +77,19 @@ export default function movieReducer(state = initialState, action) {
         return state
       }
     case REMOVE_NOMINEE:
+      const filteredList = state.nominatedList.filter((movie) => {
+        return movie.Title !== action.payload.Title && movie.Year !== action.payload.Year
+      })
+      localStorage.setItem("state", JSON.stringify({ nominatedList: [...filteredList] }))
       return {
         ...state,
-        nominatedList: state.nominatedList.filter((movie) => {
-          return movie.Title !== action.payload.Title && movie.Year !== action.payload.Year
-        }),
-        results: [...state.results.map((movie) => {
+        nominatedList: filteredList,
+        results: state.results.length ? [...state.results.map((movie) => {
           if (movie.Title === action.payload.Title && movie.Year === action.payload.Year) {
             movie.isNominated = false
           }
           return movie
-        })]
+        })] : []
       }
     default:
       return state;

@@ -1,5 +1,5 @@
-import { useState, useReducer } from 'react'
-import movieReducer, { initialState, searchTitle, addNominee, removeNominee } from './reducers/movieReducer'
+import { useState, useReducer, useEffect } from 'react'
+import movieReducer, { initialState, searchTitle, addNominee, removeNominee, checkLocalStorage } from './reducers/movieReducer'
 import { useDispatch } from 'react-redux'
 import ListBox from './components/listbox'
 import Banner from './components/banner'
@@ -8,6 +8,9 @@ import './App.css'
 import axios from 'axios'
 
 function App() {
+  useEffect(() => {
+    dispatch(checkLocalStorage())
+  }, [])
   const [searchInput, setSearchInput] = useState('')
   const [state, dispatch] = useReducer(movieReducer, initialState)
   const dispatchThunk = useDispatch()
