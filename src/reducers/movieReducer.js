@@ -40,13 +40,12 @@ export default function movieReducer(state = initialState, action) {
         nominatedList: localStorageState.nominatedList
       } : initialState
     case SEARCH_TITLE:
-      console.log('hereerre', window.location)
       const url = new URL(window.location.href)
       url.searchParams.set('search', action.payload.Title)
       window.history.pushState({}, "", url)
       return {
         ...state,
-        results: action.payload.data.Search.map((movie) => {
+        results: action.payload.data.Search?.map((movie) => {
           let isNominated = false;
 
           state.nominatedList.forEach((nominee) => {
@@ -68,11 +67,11 @@ export default function movieReducer(state = initialState, action) {
         const updatedList = [...state.nominatedList, { Title: action.payload.Title, Year: action.payload.Year, Poster: action.payload.Poster }]
 
         const nominatedQueryParam = updatedList.reduce((a, b) => {
-          return a + `${b.Title}+${b.Year},`
+          return a + `${b.Title}/${b.Year},`
         }, '')
 
         const url = new URL(window.location.href)
-        url.searchParams.set('nominated', nominatedQueryParam)
+        url.searchParams.set('nominated', nominatedQueryParam.slice(0, -1))
         window.history.pushState({}, "", url)
 
         localStorage.setItem("state", JSON.stringify({ nominatedList: updatedList }))
@@ -99,9 +98,17 @@ export default function movieReducer(state = initialState, action) {
         return a + `${b.Title}+${b.Year},`
       }, '')
 
+      // console.log('i am removequery', removeQueryParam)
+
       const urlString = new URL(window.location.href)
-      urlString.searchParams.set('nominated', removeQueryParam)
+
+      if (removeQueryParam) {
+        urlString.searchParams.set('nominated', removeQueryParam)
+      } else {
+        urlString.searchParams.delete('nominated')
+      }
       window.history.pushState({}, "", urlString)
+
 
       localStorage.setItem("state", JSON.stringify({ nominatedList: [...filteredList] }))
       return {
