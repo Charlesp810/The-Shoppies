@@ -82,7 +82,7 @@ export default function movieReducer(state = initialState, action) {
         window.history.pushState({}, "", url)
 
         localStorage.setItem("state", JSON.stringify({ nominatedList: updatedList }))
-        console.log('i am state result', state.results)
+
         return {
           ...state,
           nominatedList: updatedList,
