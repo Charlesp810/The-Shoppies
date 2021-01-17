@@ -40,9 +40,16 @@ export default function movieReducer(state = initialState, action) {
         nominatedList: localStorageState.nominatedList
       } : initialState
     case SEARCH_TITLE:
+
       const url = new URL(window.location.href)
-      url.searchParams.set('search', action.payload.Title)
+
+      if (action.payload.Title) {
+        url.searchParams.set('search', action.payload.Title)
+      } else {
+        url.searchParams.delete('search')
+      }
       window.history.pushState({}, "", url)
+
       return {
         ...state,
         results: action.payload.data.Search?.map((movie) => {
@@ -59,7 +66,7 @@ export default function movieReducer(state = initialState, action) {
             movie.isNominated = false
           }
           return movie
-        }),
+        }) ?? [],
         searched: action.payload.Title
       }
     case ADD_NOMINEE:
@@ -75,6 +82,7 @@ export default function movieReducer(state = initialState, action) {
         window.history.pushState({}, "", url)
 
         localStorage.setItem("state", JSON.stringify({ nominatedList: updatedList }))
+        console.log('i am state result', state.results)
         return {
           ...state,
           nominatedList: updatedList,
@@ -97,8 +105,6 @@ export default function movieReducer(state = initialState, action) {
       const removeQueryParam = filteredList.reduce((a, b) => {
         return a + `${b.Title}+${b.Year},`
       }, '')
-
-      // console.log('i am removequery', removeQueryParam)
 
       const urlString = new URL(window.location.href)
 
