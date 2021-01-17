@@ -35,7 +35,7 @@ function App() {
           setSearchInput(seperatedParams[1])
           dispatchThunk(async () => {
             try {
-              const { data } = await axios.get(`http://www.omdbapi.com/?apikey=17fed5e6&type=movie&s=${seperatedParams[1]}`)
+              const { data } = await axios.get(`https://www.omdbapi.com/?apikey=17fed5e6&type=movie&s=${seperatedParams[1]}`)
               dispatch(searchTitle(data, seperatedParams[1]))
             } catch (err) {
               console.log(err)
@@ -50,7 +50,7 @@ function App() {
 
             dispatchThunk(async () => {
               try {
-                const { data } = await axios.get(`http://www.omdbapi.com/?apikey=17fed5e6&t=${nomineeTitle}&y=${nomineeYear}`)
+                const { data } = await axios.get(`https://www.omdbapi.com/?apikey=17fed5e6&t=${nomineeTitle}&y=${nomineeYear}`)
                 dispatch(addNominee(data))
               } catch (err) {
                 console.log(err)
