@@ -16,7 +16,7 @@ function App() {
 
     dispatchThunk(async () => {
       try {
-        const { data } = await axios.get(`http://www.omdbapi.com/?apikey=17fed5e6&type=movie&s=${searchInput}`)
+        const { data } = await axios.get(`https://www.omdbapi.com/?apikey=17fed5e6&type=movie&s=${searchInput}`)
         dispatch(searchTitle(data, searchInput))
       } catch (err) {
         console.log(err)
